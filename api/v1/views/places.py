@@ -35,7 +35,7 @@ def httpGetUserPlaceByCityID(city_id):
 @app_views.route('/places/<string:place_id>',
                  methods=['GET'],
                  strict_slashes=False)
-def httpGetplaceByID(place_id):
+def httpGetPlaceByID(place_id):
     """
     GET /api/v1/places/<place_id>
     Get a place based on given ID
@@ -52,7 +52,7 @@ def httpGetplaceByID(place_id):
 @app_views.route('/places/<string:place_id>',
                  methods=['DELETE'],
                  strict_slashes=False)
-def httpDeleteplaceByID(place_id):
+def httpDeletePlaceByID(place_id):
     """
     DELETE /api/v1/places/<place_id>
     Delete a place based on given ID
@@ -74,7 +74,7 @@ def httpDeleteplaceByID(place_id):
 def httpAddNewPlace(city_id):
     """
     POST /api/v1/places
-    Post a new place to the database, email and password
+    Post a new place to the database, user_id and name
         required
     Return: Return the new created place through json object
     """

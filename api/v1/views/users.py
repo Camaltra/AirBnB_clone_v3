@@ -1,5 +1,9 @@
 #!/usr/bin/python3
 
+"""
+User controler file
+"""
+
 from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
@@ -77,7 +81,7 @@ def httpAddNewUser():
         return jsonify({'error': 'Missing password'}), 400
     newUser = User(**dataFromRequest)
     newUser.save()
-    return jsonify(newUser.to_dict()), 200
+    return jsonify(newUser.to_dict()), 201
 
 
 @app_views.route('/users/<string:user_id>',
