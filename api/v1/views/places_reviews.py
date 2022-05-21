@@ -68,7 +68,7 @@ def httpDeleteReviewByID(review_id):
     abort(404)
 
 
-@app_views.route('/places/<place_id>/reviews',
+@app_views.route('/places/<string:place_id>/reviews',
                  methods=['POST'],
                  strict_slashes=False)
 def httpAddNewReview(place_id):
@@ -95,7 +95,7 @@ def httpAddNewReview(place_id):
     return jsonify(newReview.to_dict()), 201
 
 
-@app_views.route('/reviews/<review_id>',
+@app_views.route('/reviews/<string:review_id>',
                  methods=['PUT'],
                  strict_slashes=False)
 def httpModifyReviewByID(review_id):
