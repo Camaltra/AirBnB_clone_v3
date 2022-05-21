@@ -79,14 +79,14 @@ def httpAddNewReview(place_id):
     Return: Return the new created review through json object
     """
     if storage.get(Place, place_id) is None:
-        abort(404)
+        return jsonify({"error": "Place id doesn't match"}), 404
     dataFromRequest = request.get_json()
     if not dataFromRequest:
         return jsonify({'error': 'Not a JSON'}), 400
     if 'user_id' not in dataFromRequest:
         return jsonify({'error': 'Missing user_id'}), 400
     if storage.get(User, dataFromRequest['user_id']) is None:
-        abort(404)
+        return jsonify({'error': "User id doesn't match"}), 404
     if 'text' not in dataFromRequest:
         return jsonify({'error': 'Missing text'}), 400
     dataFromRequest['place_id'] = place_id
@@ -98,7 +98,7 @@ def httpAddNewReview(place_id):
 @app_views.route('/reviews/<review_id>',
                  methods=['PUT'],
                  strict_slashes=False)
-def httpModifyPlaceByID(review_id):
+def httpModifyReviewByID(review_id):
     """
     PUT /api/v1/reviews/<review_id>
     Update a review based on given ID
