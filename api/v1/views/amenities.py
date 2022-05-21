@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""cities views"""
+"""amenities views"""
 
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
@@ -56,11 +56,11 @@ def amenity_post():
     return make_response(jsonify(amenity_dict.to_dict()), 201)
 
 
-@app_views.route('/cities/<string:city_id>',
+@app_views.route('/amenities/<string:amenity_id>',
                  methods=['PUT'],
                  strict_slashes=False)
 def amenity_put(amenity_id):
-    """update a city"""
+    """update a amenities"""
     amenity_dict = storage.get("Amenity", amenity_id)
     if amenity_dict is None:
         abort(404)
