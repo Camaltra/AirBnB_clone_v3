@@ -79,14 +79,14 @@ def httpAddNewPlace(city_id):
     Return: Return the new created place through json object
     """
     if storage.get(City, city_id) is None:
-        return jsonify({"error": "City id doesn't match"}), 404
+        abort(404)
     dataFromRequest = request.get_json()
     if not dataFromRequest:
         return jsonify({'error': 'Not a JSON'}), 400
     if 'user_id' not in dataFromRequest:
         return jsonify({'error': 'Missing user_id'}), 400
     if storage.get(User, dataFromRequest['user_id']) is None:
-        return jsonify({'error': "User id doesn't match"}), 404
+        abort(404)
     if 'name' not in dataFromRequest:
         return jsonify({'error': 'Missing name'}), 400
     dataFromRequest['city_id'] = city_id
