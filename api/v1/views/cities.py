@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """cities views"""
 
-from attr import attributes
 from api.v1.views import app_views
 from flask import abort, jsonify, make_response, request
 from models import storage
@@ -18,7 +17,7 @@ def cities_get(state_id):
     if state_dict is None:
         abort(404)
     cities_dict = []
-    for city in state_dict.cities_dict:
+    for city in state_dict.cities:
         cities_dict.append(city.to_dict())
     return jsonify(cities_dict)
 
