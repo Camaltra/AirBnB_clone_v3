@@ -19,7 +19,8 @@ cors = CORS(app, resources={"/*": {"origins": "0.0.0.0"}})
 def teardown_db(exception):
     """closes the storage on teardown"""
     storage.close()
- 
+
+
 @app.errorhandler(404)
 def handler404(e):
     return jsonify({"error": "Not found"}), 404
