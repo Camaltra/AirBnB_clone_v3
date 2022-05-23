@@ -140,36 +140,49 @@ def httpSearchPlaceFromCriteria():
     body = request.get_json()
     if type(body) != dict:
         abort(400, description="Not a JSON")
-    id_states = body.get("states", [])
-    id_cities = body.get("cities", [])
-    id_amenities = body.get("amenities", [])
+    statesId = body.get("states", [])
+    citiesId = body.get("cities", [])
+    amenitiesId = body.get("amenities", [])
     places = []
-    if id_states == id_cities == []:
+    states = []
+    cities = []
+    amenities = []
+
+    if statesId == citiesId == []:
         places = storage.all(Place).values()
+
     else:
-        states = [
-            storage.get(State, _id) for _id in id_states
-            if storage.get(State, _id)
-        ]
-        cities = [city for state in states for city in state.cities]
-        cities += [
-            storage.get(City, _id) for _id in id_cities
-            if storage.get(City, _id)
-        ]
+        for idState in statesId:
+            stateInstance = storage.get(State, idState)
+            if stateInstance:
+                states.append(stateInstance)
+        
+        for state in states:
+            for city in state.cities:
+                cities.append(city)
+        
+        for idCity in citiesId:
+            cityInstance = storage.get(City, idCity)
+            if cityInstance:
+                cities.append(cityInstance)
+
         cities = list(set(cities))
-        places = [place for city in cities for place in city.places]
 
-    amenities = [
-        storage.get(Amenity, _id) for _id in id_amenities
-        if storage.get(Amenity, _id)
-    ]
+        for city in cities:
+            for place in city.places:
+                places.append(place)
 
-    res = []
+    for idAmenity in amenitiesId:
+        amenityInstance = storage.get(Amenity, idAmenity)
+        if amenityInstance:
+            amenities.append(amenityInstance)
+
+    outputPlace = []
     for place in places:
-        res.append(place.to_dict())
+        outputPlace.append(place.to_dict())
         for amenity in amenities:
             if amenity not in place.amenities:
-                res.pop()
+                outputPlace.pop()
                 break
 
-    return jsonify(res)
+    return jsonify(outputPlace), 200
