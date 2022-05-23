@@ -10,6 +10,8 @@ from models import storage
 from models.place import Place
 from models.city import City
 from models.user import User
+from models.state import State
+from models.amenity import Amenity
 
 
 @app_views.route('/cities/<string:city_id>/places',
@@ -117,3 +119,49 @@ def httpModifyPlaceByID(place_id):
             setattr(placeInstance, key, value)
     placeInstance.save()
     return jsonify(placeInstance.to_dict()), 200
+
+
+@app_views.route('/places_search', methods=['POST'], strict_slashes=False)
+def httpSearchPlaceFromCriteria():
+    """
+    Comment
+    """
+    dataFromRequest = request.get_json()
+    if not dataFromRequest:
+        return jsonify({'error': 'Not a JSON'}), 400
+    allCities = []
+    allPlaces = []
+    allPlacesJson = []
+    if 'states' not in dataFromRequest and 'cities' not in dataFromRequest:
+        for key, value in storage.all(Place).items():
+            allPlaces.append(value)
+    if 'states' in dataFromRequest:
+        for stateID in dataFromRequest['states']:
+            state = storage.get(State, stateID)
+            if state is None:
+                continue
+            for city in state.cities:
+                allCities.append(city)
+    if 'cities' in dataFromRequest:
+        for cityID in dataFromRequest['cities']:
+            city = storage.get(City, cityID)
+            if city is None:
+                continue
+            if city not in allCities:
+                allCities.append(city)
+    for city in allCities:
+        for place in city.places:
+            allPlaces.append(place)
+    if 'amenities' in dataFromRequest:
+        for amenityID in dataFromRequest['amenities']:
+            amenity = storage.get(Amenity, amenityID)
+            if amenity is None:
+                continue
+            for place in allPlaces:
+                if amenity not in place.amenities:
+                    allPlaces.remove(place)
+    print(allPlaces)
+    for place in allPlaces:
+        allPlacesJson.append(place.to_dict())
+    print(allPlacesJson)
+    return jsonify(allPlacesJson), 200
