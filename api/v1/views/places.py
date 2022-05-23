@@ -140,7 +140,7 @@ def httpSearchPlaceFromCriteria():
     dataFromRequest = request.get_json()
     if not dataFromRequest:
         return jsonify({'error': 'Not a JSON'}), 400
-    states = dataFromRequest.get('state', [])
+    states = dataFromRequest.get('states', [])
     cities = dataFromRequest.get('cities', [])
     amenities = dataFromRequest.get('amenities', [])
     allAmenitiesInstance = []
@@ -171,4 +171,3 @@ def httpSearchPlaceFromCriteria():
                 outputPlaces.pop()
                 break
     return jsonify(outputPlaces), 200
-
