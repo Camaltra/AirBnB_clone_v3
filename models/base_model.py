@@ -72,7 +72,7 @@ class BaseModel:
             new_dict.pop('_password', None)
         new_dict["__class__"] = self.__class__.__name__
         if not save_dict:
-            new_dict.pop('_password', None)
+            new_dict.pop('password', None)
         if "amenities" in new_dict:
             del new_dict["amenities"]
         if "reviews" in new_dict:
