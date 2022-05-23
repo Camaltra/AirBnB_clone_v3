@@ -3,6 +3,7 @@
 Contains class BaseModel
 """
 
+import hashlib
 from datetime import datetime
 import models
 from os import getenv
@@ -65,15 +66,12 @@ class BaseModel:
             new_dict["created_at"] = new_dict["created_at"].strftime(time)
         if "updated_at" in new_dict:
             new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
-        if 'password' in new_dict:
-            new_dict['password'] = new_dict['password']
+        if "_sa_instance_state" in new_dict:
+            del new_dict["_sa_instance_state"]
+        if hasattr(self, "password"):
             new_dict.pop('password', None)
-        if 'amenities' in new_dict:
-            new_dict.pop('amenities', None)
-        if 'reviews' in new_dict:
-            new_dict.pop('reviews', None)
         new_dict["__class__"] = self.__class__.__name__
-        if not save_dict:
+        if hasattr(self, "password"):
             new_dict.pop('password', None)
         return new_dict
 
