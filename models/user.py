@@ -14,7 +14,7 @@ class User(BaseModel, Base):
     if models.storage_t == 'db':
         __tablename__ = 'users'
         email = Column(String(128), nullable=False)
-        __password = Column('password', String(128), nullable=False)
+        _password = Column('password', String(128), nullable=False)
         first_name = Column(String(128), nullable=True)
         last_name = Column(String(128), nullable=True)
         places = relationship("Place",
@@ -25,7 +25,7 @@ class User(BaseModel, Base):
                                cascade="all, delete-orphan")
     else:
         email = ""
-        __password = ""
+        _password = ""
         first_name = ""
         last_name = ""
 
@@ -35,7 +35,7 @@ class User(BaseModel, Base):
 
     @property
     def password(self):
-        return self.__password
+        return self._password
 
     @password.setter
     def password(self, pwd):

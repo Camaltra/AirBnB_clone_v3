@@ -5,6 +5,7 @@ Contains class BaseModel
 
 import hashlib
 from datetime import datetime
+from types import new_class
 import models
 from os import getenv
 import sqlalchemy
@@ -66,11 +67,13 @@ class BaseModel:
             new_dict["created_at"] = new_dict["created_at"].strftime(time)
         if "updated_at" in new_dict:
             new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
-        if "_sa_instance_state" in new_dict:
-            del new_dict["_sa_instance_state"]
+        if '_password' in new_dict:
+            new_dict['password'] = new_dict['_password']
+            new_dict.pop('_password', None)
         new_dict["__class__"] = self.__class__.__name__
+        new_dict.pop('_sa_instance_state', None)
         if not save_dict:
-            new_dict.pop('password', None)
+            new_dict.pop('_password', None)
         return new_dict
 
     def delete(self):
