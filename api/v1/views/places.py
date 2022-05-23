@@ -5,9 +5,10 @@ Place controler file
 """
 
 from api.v1.views import app_views
-frdataFromRequestels import storage
-frdataFromRequestels.place import Place
-from dataFromRequest.city import City
+from flask import jsonify, abort, request
+from models import storage
+from models.place import Place
+from models.city import City
 from models.user import User
 from models.state import State
 from models.amenity import Amenity
@@ -136,38 +137,35 @@ def httpSearchPlaceFromCriteria():
     If amenities list is not empty, limit search results to only
         Place objects having all Amenity ids listed
     """
-    if request.get_json() is not None:
-        params = request.get_json()
-        states = params.get('states', [])
-        cities = params.get('cities', [])
-        amenities = params.get('amenities', [])
-        amenity_objects = []
-        for amenity_id in amenities:
-            amenity = storage.get('Amenity', amenity_id)
-            if amenity:
-                amenity_objects.append(amenity)
-        if states == cities == []:
-            places = storage.all('Place').values()
-        else:
-            places = []
-            for state_id in states:
-                state = storage.get('State', state_id)
-                state_cities = state.cities
-                for city in state_cities:
-                    if city.id not in cities:
-                        cities.append(city.id)
-            for city_id in cities:
-                city = storage.get('City', city_id)
-                for place in city.places:
-                    places.append(place)
-        confirmed_places = []
-        for place in places:
-            place_amenities = place.amenities
-            confirmed_places.append(place.to_dict())
-            for amenity in amenity_objects:
-                if amenity not in place_amenities:
-                    confirmed_places.pop()
-                    break
-        return jsonify(confirmed_places), 200
-    else:
+    dataFromRequest = request.get_json()
+    if not dataFromRequest:
         return jsonify({'error': 'Not a JSON'}), 400
+    states = dataFromRequest.get('states', [])
+    cities = dataFromRequest.get('cities', [])
+    amenities = dataFromRequest.get('amenities', [])
+    allAmenitiesInstance = []
+    for amenity in amenities:
+        amenityInstance = storage.get(Amenity, amenity)
+        if amenityInstance:
+            allAmenitiesInstance.append(amenityInstance)
+    if states == cities == []:
+        allPlacesInstance = storage.all(Place).values()
+    else:
+        allPlacesInstance = []
+        for state in states:
+            stateInstance = storage.get(State, state)
+            for city in stateInstance.cities:
+                if city.id not in cities:
+                    cities.append(city.id)
+        for city in cities:
+            cityInstance = storage.get(City, city)
+            for place in cityInstance.places:
+                allPlacesInstance.append(place)
+    outputPlaces = []
+    for place in allPlacesInstance:
+        outputPlaces.append(place.to_dict())
+        for amenity in allAmenitiesInstance:
+            if amenity not in place.amenities:
+                outputPlaces.pop()
+                break
+    return jsonify(outputPlaces), 200
