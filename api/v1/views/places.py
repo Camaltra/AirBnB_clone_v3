@@ -5,10 +5,9 @@ Place controler file
 """
 
 from api.v1.views import app_views
-from flask import jsonify, abort, request
-from models import storage
-from models.place import Place
-from models.city import City
+frdataFromRequestels import storage
+frdataFromRequestels.place import Place
+from dataFromRequest.city import City
 from models.user import User
 from models.state import State
 from models.amenity import Amenity
@@ -144,28 +143,30 @@ def httpSearchPlaceFromCriteria():
     cities = dataFromRequest.get('cities', [])
     amenities = dataFromRequest.get('amenities', [])
     allAmenitiesInstance = []
-    for amenity in amenities:
-        amenityInstance = storage.get(Amenity, amenity)
-        if amenityInstance:
-            allAmenitiesInstance.append(amenityInstance)
+    for amenity_id in amenities:
+        amenity = storage.get('Amenity', amenity_id)
+        if amenity:
+            allAmenitiesInstance.append(amenity)
     if states == cities == []:
-        allPlacesInstance = storage.all(Place).values()
+        places = storage.all('Place').values()
     else:
-        allPlacesInstance = []
-        for state in states:
-            stateInstance = storage.get(State, state)
-            for city in stateInstance.cities:
+        places = []
+        for state_id in states:
+            state = storage.get('State', state_id)
+            state_cities = state.cities
+            for city in state_cities:
                 if city.id not in cities:
                     cities.append(city.id)
-        for city in cities:
-            cityInstance = storage.get(City, city)
-            for place in cityInstance.places:
-                allPlacesInstance.append(place)
-    outputPlaces = []
-    for place in allPlacesInstance:
-        outputPlaces.append(place.to_dict())
+        for city_id in cities:
+            city = storage.get('City', city_id)
+            for place in city.places:
+                places.append(place)
+    confirmed_places = []
+    for place in places:
+        place_amenities = place.amenities
+        confirmed_places.append(place.to_dict())
         for amenity in allAmenitiesInstance:
-            if amenity not in place.amenities:
-                outputPlaces.pop()
+            if amenity not in place_amenities:
+                confirmed_places.pop()
                 break
-    return jsonify(outputPlaces), 200
+    return jsonify(confirmed_places)
