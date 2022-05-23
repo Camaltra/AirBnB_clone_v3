@@ -148,6 +148,11 @@ def httpSearchPlaceFromCriteria():
     cities = []
     amenities = []
 
+    for idAmenity in amenitiesId:
+        amenityInstance = storage.get(Amenity, idAmenity)
+        if amenityInstance:
+            amenities.append(amenityInstance)
+
     if statesId == citiesId == []:
         places = storage.all(Place).values()
 
@@ -170,11 +175,6 @@ def httpSearchPlaceFromCriteria():
         for city in cities:
             for place in city.places:
                 places.append(place)
-
-    for idAmenity in amenitiesId:
-        amenityInstance = storage.get(Amenity, idAmenity)
-        if amenityInstance:
-            amenities.append(amenityInstance)
 
     outputPlace = []
     for place in places:
