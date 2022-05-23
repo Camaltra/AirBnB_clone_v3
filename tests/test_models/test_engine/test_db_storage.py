@@ -16,7 +16,7 @@ from models.state import State
 from models.user import User
 import json
 import os
-import pycodestyle
+import pep8
 import unittest
 DBStorage = db_storage.DBStorage
 classes = {"Amenity": Amenity, "City": City, "Place": Place,
@@ -32,14 +32,14 @@ class TestDBStorageDocs(unittest.TestCase):
 
     def test_pep8_conformance_db_storage(self):
         """Test that models/engine/db_storage.py conforms to PEP8."""
-        pep8s = pycodestyle.StyleGuide(quiet=True)
+        pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['models/engine/db_storage.py'])
         self.assertEqual(result.total_errors, 0,
                          "Found code style errors (and warnings).")
 
     def test_pep8_conformance_test_db_storage(self):
         """Test tests/test_models/test_db_storage.py conforms to PEP8."""
-        pep8s = pycodestyle.StyleGuide(quiet=True)
+        pep8s = pep8.StyleGuide(quiet=True)
         result = pep8s.check_files(['tests/test_models/test_engine/\
 test_db_storage.py'])
         self.assertEqual(result.total_errors, 0,
@@ -71,18 +71,62 @@ test_db_storage.py'])
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_returns_dict(self):
-        """Test that all returns a dictionaty"""
-        self.assertIs(type(models.storage.all()), dict)
+    def test_get(self):
+        """Testing the get methods from the db storage"""
+        newState = State(name="California")
+        newCity = City(name="San_Francisco", state_id=newState.id)
+        newUser = User(email="thisisanemail@email.com",
+                       password="thisisnotapassword")
+        newPlace = Place(name="Great Five Stars Hotel",
+                         city_id=newCity.id,
+                         state_id=newState.id,
+                         user_id=newUser.id)
+        newReview = Review(text="This is a review",
+                           place_id=newPlace.id,
+                           user_id=newUser.id)
+        newAmenity = Amenity(name="Ventilator3000")
+        newState.save()
+        newCity.save()
+        newUser.save()
+        newPlace.save()
+        newReview.save()
+        newAmenity.save()
+        self.assertEqual(None, models.storage.get("jkdsf", "dksfjsd"))
+        self.assertEqual(newCity, models.storage.get(City, newCity.id))
+        self.assertEqual(newUser, models.storage.get(User, newUser.id))
+        self.assertEqual(newPlace, models.storage.get(Place, newPlace.id))
+        self.assertEqual(newReview, models.storage.get(Review, newReview.id))
+        self.assertEqual(newAmenity,
+                         models.storage.get(Amenity, newAmenity.id))
+        self.assertEqual(None, models.storage.get(State, "Not a good ID"))
 
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_all_no_class(self):
-        """Test that all returns all rows when no class is passed"""
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_new(self):
-        """test that new adds an object to the database"""
-
-    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
-    def test_save(self):
-        """Test that save properly saves objects to file.json"""
+    def test_count(self):
+        """testing the count function form the db storage"""
+        currentNumberOfState = models.storage.count(State)
+        listOfState = ["California", "New_York", "Floride", "Utah"]
+        for stateName in listOfState:
+            newState = State(name=stateName)
+            newState.save()
+        newNumberOfState = models.storage.count(State)
+        self.assertEqual(newNumberOfState - currentNumberOfState,
+                         len(listOfState))
+        allInstance = models.storage.count()
+        self.assertEqual(allInstance - currentNumberOfState,
+                         len(listOfState))
+        texasState = State(name="Texas")
+        texasState.save()
+        newNumberOfState += 1
+        currentNumberOfCity = models.storage.count(City)
+        listCityOfTexas = ["Austin", "Dallas", "Del Rio", "Killeen"]
+        for cityName in listCityOfTexas:
+            newCity = City(name=cityName, state_id=texasState.id)
+            newCity.save()
+        newNumberOfCity = models.storage.count(City)
+        self.assertEqual(newNumberOfCity - currentNumberOfCity,
+                         len(listCityOfTexas))
+        allInstance = models.storage.count()
+        numberOfState = newNumberOfState - currentNumberOfState
+        numberOfCity = newNumberOfCity - currentNumberOfCity
+        numberOfAllInstance = numberOfState + numberOfCity
+        self.assertEqual(numberOfAllInstance, allInstance)
