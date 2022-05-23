@@ -154,7 +154,8 @@ def httpSearchPlaceFromCriteria():
         allPlacesInstance = []
         for state in states:
             stateInstance = storage.get(State, state)
-            for city in stateInstance.cities:
+            state_cities = stateInstance.cities
+            for city in state_cities:
                 if city.id not in cities:
                     cities.append(city.id)
         for city in cities:
@@ -163,9 +164,10 @@ def httpSearchPlaceFromCriteria():
                 allPlacesInstance.append(place)
     outputPlaces = []
     for place in allPlacesInstance:
+        place_amenities = place.amenities
         outputPlaces.append(place.to_dict())
         for amenity in allAmenitiesInstance:
-            if amenity not in place.amenities:
+            if amenity not in place_amenities:
                 outputPlaces.pop()
                 break
     return jsonify(outputPlaces), 200
