@@ -71,9 +71,14 @@ class BaseModel:
             new_dict['password'] = new_dict['_password']
             new_dict.pop('_password', None)
         new_dict["__class__"] = self.__class__.__name__
-        new_dict.pop('_sa_instance_state', None)
         if not save_dict:
             new_dict.pop('_password', None)
+        if "amenities" in new_dict:
+            del new_dict["amenities"]
+        if "reviews" in new_dict:
+            del new_dict["reviews"]
+        if "_sa_instance_state" in new_dict:
+            del new_dict["_sa_instance_state"]
         return new_dict
 
     def delete(self):
