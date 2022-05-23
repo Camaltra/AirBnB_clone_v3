@@ -157,11 +157,11 @@ def httpSearchPlaceFromCriteria():
             if stateInstance:
                 for city in stateInstance.cities:
                     if city.id not in cities:
-                        cities.apprend(city.id)
+                        cities.append(city.id)
         for city in cities:
             cityInstance = storage.get(City, city)
             if cityInstance:
-                for place in city.places:
+                for place in cityInstance.places:
                     allPlacesInstance.append(place)
     outputPlaces = []
     for place in allPlacesInstance:
