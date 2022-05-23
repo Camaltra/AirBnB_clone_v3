@@ -33,7 +33,9 @@ class User(BaseModel, Base):
         """initializes user"""
         super().__init__(*args, **kwargs)
 
-    @password.setter
     def password(self, pwd):
         """set password md5"""
-        self.password = hashlib.md5(pwd.encode()).hexdigest()
+        passcript = hashlib.md5()
+        passcript.update(pwd.encode("utf-8"))
+        passcript = passcript.hexdigest()
+        setattr(self, "password", passcript)
