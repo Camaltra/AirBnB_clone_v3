@@ -68,8 +68,6 @@ class BaseModel:
             new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
         if "_sa_instance_state" in new_dict:
             del new_dict["_sa_instance_state"]
-        if hasattr(self, "password"):
-            new_dict.pop('password', None)
         new_dict["__class__"] = self.__class__.__name__
         if hasattr(self, "password"):
             new_dict.pop('password', None)
