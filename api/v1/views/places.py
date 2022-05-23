@@ -148,21 +148,19 @@ def httpSearchPlaceFromCriteria():
         amenityInstance = storage.get(Amenity, amenity)
         if amenityInstance:
             allAmenitiesInstance.append(amenityInstance)
-    allPlacesInstance = []
-    if len(states) == 0 and len(cities) == 0:
+    if states == cities == []:
         allPlacesInstance = storage.all(Place).values()
     else:
+        allPlacesInstance = []
         for state in states:
             stateInstance = storage.get(State, state)
-            if stateInstance:
-                for city in stateInstance.cities:
-                    if city.id not in cities:
-                        cities.append(city.id)
+            for city in stateInstance.cities:
+                if city.id not in cities:
+                    cities.append(city.id)
         for city in cities:
             cityInstance = storage.get(City, city)
-            if cityInstance:
-                for place in cityInstance.places:
-                    allPlacesInstance.append(place)
+            for place in cityInstance.places:
+                allPlacesInstance.append(place)
     outputPlaces = []
     for place in allPlacesInstance:
         outputPlaces.append(place.to_dict())
