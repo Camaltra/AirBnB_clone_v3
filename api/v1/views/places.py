@@ -176,8 +176,9 @@ def httpSearchPlaceFromCriteria():
             cities.append(city)
 
     for city in allCitiesInstance:
-        if city not in cities:
             cities.append(city)
+    
+    cities = list(set(cities))
 
     for city in cities:
         for place in city.places:
