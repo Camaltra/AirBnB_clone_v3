@@ -1,0 +1,67 @@
+GET: returns all places by city
+---
+paths:
+  "/cities/{city_id}/places":
+tags:
+  - GET /cities/{city_id}/places
+parameters:
+  - name: city_id
+    in: path
+    data: string
+    required: true
+    schema:
+      properties:
+        name:
+          type: string
+          description: city_id attribute of the place to get all of them
+responses:
+  200:
+    description: The objects's attributes names and values in JSON format
+    schema:
+      properties:
+        __class__:
+          type: string
+          description: Class name (obj.__class__.__name__)
+        id:
+          type: string
+          description: unique id of the object
+        user_id:
+          type: string
+          description: unique user id of the related state of the object
+        place_id:
+          type: string
+          description: unique place id attribute of the object
+        created_at:
+          type: string
+          description: datetime the object instance was created
+        updated_at:
+          type: string
+          description: datetime the object was updated
+        description:
+          type: string
+          description: description of the place
+        number_rooms:
+          type: integer
+          description: number of rooms in the place
+        number_bathrooms:
+          type: integer
+          description: number of bathrooms in the place
+        max_guest:
+          type: integer
+          description: maximum number of guests to stay per night
+        price_by_night:
+          type: integer
+          description: price per night of stay
+        latitutude:
+          type: number
+          description: latitude of geo location of place
+        longitude:
+          type: number
+          description: longitude of geo location of place
+  404:
+    description: The city_id doesn't correspond to any city
+    schema:
+      properties:
+        error:
+          type: string
+          description: Not found
