@@ -1,0 +1,20 @@
+tags:
+  - Places Amenities
+parameters:
+  - name: place id
+    in: path
+    path: /api/v1/places/<place_id>/amenities/<amenity_id>
+    type: string
+    required: true
+    description: POST place amenities
+  - name: amenity id
+    in: path
+    path: /api/v1/places/<place_id>/amenities/<amenity_id>
+    type: string
+    required: true
+    description: POST amenities
+responses:
+  404:
+    description: Not found
+  201:
+    description: POST places amenities

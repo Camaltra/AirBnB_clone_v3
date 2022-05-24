@@ -1,0 +1,14 @@
+tags:
+  - Places Reviews
+parameters:
+  - name: review id
+    in: path
+    path: /api/v1/reviews/<review_id>
+    type: string
+    required: true
+    description: ID review
+responses:
+  404:
+    description: Not found
+  200:
+    description: ID review

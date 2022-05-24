@@ -1,0 +1,28 @@
+tags:
+  - Users
+parameters:
+  - name: user id
+    in: path
+    path: /api/v1/users/<user_id>
+    type: string
+    required: true
+    description: ID user
+  - name: PUT user
+    in: body
+    type: string
+    required: false
+    description: delete the atributs
+    properties:
+      first_name:
+        type: string
+        description: FirstName user
+      last_name:
+        type: string
+        description: LastName user
+responses:
+  404:
+    description: Not found
+  400:
+    description: Bad way expression
+  200:
+    description: Request good
