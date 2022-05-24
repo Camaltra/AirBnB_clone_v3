@@ -12,11 +12,13 @@ from models.city import City
 from models.user import User
 from models.state import State
 from models.amenity import Amenity
+from flasgger import Swagger, swag_from
 
 
 @app_views.route('/cities/<string:city_id>/places',
                  methods=['GET'],
                  strict_slashes=False)
+@swag_from('documentation/places/places_by_city_get.yml')
 def httpGetUserPlaceByCityID(city_id):
     """
     GET /api/v1/cities/<city_id>/places
@@ -37,6 +39,7 @@ def httpGetUserPlaceByCityID(city_id):
 @app_views.route('/places/<string:place_id>',
                  methods=['GET'],
                  strict_slashes=False)
+@swag_from('documentation/places/places_id_get.yml')
 def httpGetPlaceByID(place_id):
     """
     GET /api/v1/places/<place_id>
@@ -54,6 +57,7 @@ def httpGetPlaceByID(place_id):
 @app_views.route('/places/<string:place_id>',
                  methods=['DELETE'],
                  strict_slashes=False)
+@swag_from('documentation/places/places_id_delete.yml')
 def httpDeletePlaceByID(place_id):
     """
     DELETE /api/v1/places/<place_id>
@@ -73,6 +77,7 @@ def httpDeletePlaceByID(place_id):
 @app_views.route('/cities/<string:city_id>/places',
                  methods=['POST'],
                  strict_slashes=False)
+@swag_from('documentation/places/places_by_city_post.yml')
 def httpAddNewPlace(city_id):
     """
     POST /api/v1/places
@@ -100,6 +105,7 @@ def httpAddNewPlace(city_id):
 @app_views.route('/places/<string:place_id>',
                  methods=['PUT'],
                  strict_slashes=False)
+@swag_from('documentation/places/places_id_put.yml')
 def httpModifyPlaceByID(place_id):
     """
     PUT /api/v1/places/<place_id>
@@ -122,6 +128,7 @@ def httpModifyPlaceByID(place_id):
 
 
 @app_views.route('/places_search', methods=['POST'], strict_slashes=False)
+@swag_from('documentation/places/places_by_city_post.yml')
 def httpSearchPlaceFromCriteria():
     """
     GEt all Place through some criteria

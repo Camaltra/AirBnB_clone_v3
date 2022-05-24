@@ -73,7 +73,7 @@ def city_post(state_id):
 @app_views.route('/cities/<string:city_id>',
                  methods=['PUT'],
                  strict_slashes=False)
-@swag_from('documentation/cities/cities_id_put.yml')                 
+@swag_from('documentation/cities/cities_id_put.yml')
 def city_put(city_id):
     """update a city"""
     city_dict = storage.get("City", city_id)
