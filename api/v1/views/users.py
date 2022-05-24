@@ -8,11 +8,13 @@ from api.v1.views import app_views
 from flask import jsonify, abort, request
 from models import storage
 from models.user import User
+from flasgger import Swagger, swag_from
 
 
 @app_views.route('/users',
                  methods=['GET'],
                  strict_slashes=False)
+@swag_from('documentation/users/GET_ALL_user.yml')
 def httpGetAllUsers():
     """
     GET /api/v1/users
@@ -29,6 +31,7 @@ def httpGetAllUsers():
 @app_views.route('/users/<string:user_id>',
                  methods=['GET'],
                  strict_slashes=False)
+@swag_from('documentation/users/GET_user.yml')
 def httpGetUserByID(user_id):
     """
     GET /api/v1/users/<user_id>
@@ -46,6 +49,7 @@ def httpGetUserByID(user_id):
 @app_views.route('/users/<string:user_id>',
                  methods=['DELETE'],
                  strict_slashes=False)
+@swag_from('documentation/users/DELETE_user.yml')
 def httpDeleteUserByID(user_id):
     """
     DELETE /api/v1/users/<user_id>
@@ -65,6 +69,7 @@ def httpDeleteUserByID(user_id):
 @app_views.route('/users',
                  methods=['POST'],
                  strict_slashes=False)
+@swag_from('documentation/users/POST_user.yml')
 def httpAddNewUser():
     """
     POST /api/v1/users
@@ -87,6 +92,7 @@ def httpAddNewUser():
 @app_views.route('/users/<string:user_id>',
                  methods=['PUT'],
                  strict_slashes=False)
+@swag_from('documentation/users/PUT_user.yml')
 def httpModifyUserByID(user_id):
     """
     PUT /api/v1/users/<user_id>

@@ -1,0 +1,22 @@
+tags:
+  - Users
+parameters:
+  - name: POST user
+    in: body
+    type: string
+    required: true
+    requires:
+      - email
+      - password
+    properties:
+      email:
+        type: string
+        description: Email user
+      password:
+        type: string
+        description: Password User
+responses:
+  400:
+    description: Bad Request
+  201:
+    description: POST user

@@ -1,0 +1,30 @@
+DELETE: returns a state by its ID
+---
+paths:
+  "/states/{state_id}":
+tags:
+  - DELETE /states/{state_id}
+parameters:
+  - name: state_id
+    in: path
+    data: string
+    required: true
+    schema:
+      properties:
+        name:
+          type: string
+          description: state_id to the place to delete from the db
+responses:
+  200:
+    description: An empty JSON Object
+    schema:
+      properties:
+        empty:
+          description: Empty JSON Object
+  404:
+    description: The state_id doesn't correspond to any state
+    schema:
+      properties:
+        error:
+          type: string
+          description: Not found

@@ -1,0 +1,26 @@
+GET: returns all states
+---
+paths:
+  "/states":
+tags:
+  - GET /states
+responses:
+  200:
+    description: The objects's attributes names and values in JSON format
+    schema:
+      properties:
+        __class__:
+          type: string
+          description: Class name (obj.__class__.__name__)
+        id:
+          type: string
+          description: unique id of the object
+        name:
+          type: string
+          description: the name of the state
+        created_at:
+          type: string
+          description: datetime the object instance was created
+        updated_at:
+          type: string
+          description: datetime the object was updated

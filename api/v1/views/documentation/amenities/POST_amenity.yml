@@ -1,0 +1,16 @@
+tags:
+  - Amenities
+parameters:
+  - name: name
+    in: body
+    type: string
+    required: true
+    properties:
+      name:
+        type: string
+        description: POST amenities
+responses:
+  400:
+    description: Bad way expression
+  201:
+    description: Request good

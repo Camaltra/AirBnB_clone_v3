@@ -10,11 +10,13 @@ from models import storage
 from models.place import Place
 from models.review import Review
 from models.user import User
+from flasgger import Swagger, swag_from
 
 
 @app_views.route('/places/<string:place_id>/reviews',
                  methods=['GET'],
                  strict_slashes=False)
+@swag_from('documentation/places_reviews/GET_ALL_places_review.yml')
 def httpGetReviewsByPlaceID(place_id):
     """
     GET /api/v1/places/<place_id>/reviews
@@ -35,6 +37,7 @@ def httpGetReviewsByPlaceID(place_id):
 @app_views.route('/reviews/<string:reviews_id>',
                  methods=['GET'],
                  strict_slashes=False)
+@swag_from('documentation/places_reviews/GET_places_review.yml')
 def httpGetReviewsByID(reviews_id):
     """
     GET /api/v1/reviews/<reviews_id>
@@ -52,6 +55,7 @@ def httpGetReviewsByID(reviews_id):
 @app_views.route('/reviews/<string:review_id>',
                  methods=['DELETE'],
                  strict_slashes=False)
+@swag_from('documentation/places_reviews/DELETE_places_review.yml')
 def httpDeleteReviewByID(review_id):
     """
     DELETE /api/v1/reviews/<review_id>
@@ -71,6 +75,7 @@ def httpDeleteReviewByID(review_id):
 @app_views.route('/places/<string:place_id>/reviews',
                  methods=['POST'],
                  strict_slashes=False)
+@swag_from('documentation/places_reviews/POST_places_review.yml')
 def httpAddNewReview(place_id):
     """
     POST /api/v1/places/<place_id>/reviews
@@ -98,6 +103,7 @@ def httpAddNewReview(place_id):
 @app_views.route('/reviews/<string:review_id>',
                  methods=['PUT'],
                  strict_slashes=False)
+@swag_from('documentation/places_reviews/PUT_places_review.yml')
 def httpModifyReviewByID(review_id):
     """
     PUT /api/v1/reviews/<review_id>

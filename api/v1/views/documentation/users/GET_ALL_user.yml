@@ -1,0 +1,32 @@
+tags:
+  - Users
+responses:
+  200:
+    description: GOOD
+    schema:
+      type: array
+      properties:
+        __class__:
+          type: string
+          description: Name class
+        id:
+          type: string
+          description: ID user
+        email:
+          type: string
+          description: Email user
+        password:
+          type: string
+          description: Password user
+        first_name:
+          type: string
+          description: FirstName user
+        last_name:
+          type: string
+          description: LastName user
+        created_at:
+          type: string
+          description: Datetime user
+        updated_at:
+          type: string
+          description: Uptime modification user

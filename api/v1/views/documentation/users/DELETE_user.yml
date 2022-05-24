@@ -1,0 +1,14 @@
+tags:
+  - Users
+parameters:
+  - name: user id
+    in: path
+    path: /api/v1/users/<user_id>
+    type: string
+    required: true
+    description: ID user
+responses:
+  404:
+    description: Not found
+  200:
+    description: DELETE user

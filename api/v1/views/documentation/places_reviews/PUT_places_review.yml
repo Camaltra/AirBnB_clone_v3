@@ -1,0 +1,25 @@
+tags:
+  - Places Reviews
+parameters:
+  - name: review id
+    in: path
+    path: /api/v1/reviews/<review_id>
+    type: string
+    required: true
+    description: ID review
+  - name: PUT review
+    in: body
+    type: string
+    required: false
+    description: delete the atributs
+    properties:
+      text:
+        type: string
+        description: Content review
+responses:
+  404:
+    description: Not found
+  400:
+    description: Bad way expression
+  200:
+    description: Request good
