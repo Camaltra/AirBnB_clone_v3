@@ -1,0 +1,43 @@
+GET: returns all cities by states
+---
+paths:
+  "/states/{state_id}/cities":
+tags:
+  - GET /states/{state_id}/cities
+parameters:
+  - name: state_id
+    in: path
+    data: string
+    required: true
+    schema:
+      properties:
+        name:
+          type: string
+          description: state_id attribute of the cities to get all of them
+responses:
+  200:
+    description: The objects's attributes names and values in JSON format
+    schema:
+      properties:
+        __class__:
+          type: string
+          description: Class name (obj.__class__.__name__)
+        id:
+          type: string
+          description: unique id of the object
+        state_id:
+          type: string
+          description: unique state id of the related state of the object
+        created_at:
+          type: string
+          description: datetime the object instance was created
+        updated_at:
+          type: string
+          description: datetime the object was updated
+  404:
+    description: The state_id doesn't correspond to any state
+    schema:
+      properties:
+        error:
+          type: string
+          description: Not found

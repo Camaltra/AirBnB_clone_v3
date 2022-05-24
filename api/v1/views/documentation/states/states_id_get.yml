@@ -1,0 +1,43 @@
+GET: returns a state by its ID
+---
+paths:
+  "/states/{state_id}":
+tags:
+  - GET /states/{state_id}
+parameters:
+  - name: state_id
+    in: path
+    data: string
+    required: true
+    schema:
+      properties:
+        name:
+          type: string
+          description: state_id to the place to get from the db
+responses:
+  200:
+    description: The objects's attributes names and values in JSON format
+    schema:
+      properties:
+        __class__:
+          type: string
+          description: Class name (obj.__class__.__name__)
+        id:
+          type: string
+          description: unique id of the object
+        name:
+          type: string
+          description: the name of the state
+        created_at:
+          type: string
+          description: datetime the object instance was created
+        updated_at:
+          type: string
+          description: datetime the object was updated
+  404:
+    description: The state_id doesn't correspond to any state
+    schema:
+      properties:
+        error:
+          type: string
+          description: Not found

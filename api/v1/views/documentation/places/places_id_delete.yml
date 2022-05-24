@@ -1,0 +1,30 @@
+DELETE: delete a place by its id
+---
+paths:
+  "/places/{place_id}":
+tags:
+  - DELETE /places/{place_id}
+parameters:
+  - name: place_id
+    in: path
+    data: string
+    required: true
+    schema:
+      properties:
+        name:
+          type: string
+          description: place_id to the place to delete from the db
+responses:
+  200:
+    description: An empty JSON Object
+    schema:
+      properties:
+        empty:
+          description: Empty JSON Object
+  404:
+    description: The place_id doesn't correspond to any place
+    schema:
+      properties:
+        error:
+          type: string
+          description: Not found

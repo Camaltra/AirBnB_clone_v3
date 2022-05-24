@@ -1,0 +1,60 @@
+POST: returns a state by its ID
+---
+paths:
+  "/states/{state_id}":
+tags:
+  - POST /states/{state_id}
+post:
+parameters:
+  - name: state_id
+    in: path
+    data: string
+    required: true
+    schema:
+      properties:
+        name:
+          type: string
+          description: state_id to the place to get from the db
+  - name: name
+    in: body
+    data: string
+    required: false
+    schema:
+      properties:
+        name:
+          type: string
+          description: name of the state
+responses:
+  201:
+    description: The objects's attributes names and values in JSON format
+    schema:
+      properties:
+        __class__:
+          type: string
+          description: Class name (obj.__class__.__name__)
+        id:
+          type: string
+          description: unique id of the object
+        name:
+          type: string
+          description: the name of the state
+        created_at:
+          type: string
+          description: datetime the object instance was created
+        updated_at:
+          type: string
+          description: datetime the object was updated
+  404:
+    description: The state_id doesn't correspond to any state
+    schema:
+      properties:
+        error:
+          type: string
+          description: Not found
+  400:
+    description: This is not a JSON | Missing name
+    schema:
+      properties:
+        error:
+          type: string
+          description: Not a JSON | Missing name
