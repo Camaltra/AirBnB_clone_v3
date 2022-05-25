@@ -1,0 +1,38 @@
+tags:
+  - Places Reviews
+parameters:
+  - name: place id
+    in: path
+    path: /api/v1/places/<place_id>/reviews
+    type: string
+    required: true
+    description: ID place
+responses:
+  404:
+    description: Not found
+  200:
+    description: GET ALL place review
+    schema:
+      type: array
+      properties:
+        __class__:
+          type: string
+          description: Name class
+        id:
+          type: string
+          description: ID reviews
+        text:
+          type: string
+          description: Name reviews
+        place_id:
+          type: string
+          description: ID place review
+        user_id:
+          type: string
+          description: ID user review
+        created_at:
+          type: string
+          description: Datetime review
+        updated_at:
+          type: string
+          description: Uptime modification review

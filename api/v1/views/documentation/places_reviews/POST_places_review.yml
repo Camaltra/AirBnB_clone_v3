@@ -1,0 +1,25 @@
+tags:
+  - Places Reviews
+parameters:
+  - name: place id
+    in: path
+    path: /api/v1/places/<place_id>/reviews
+    type: string
+    required: true
+    description: ID place review
+  - name: POST review
+    in: body
+    type: string
+    required: True
+    properties:
+      text:
+        type: string
+        description: Content review
+      user_id:
+        type: string
+        description: ID review
+responses:
+  400:
+    description: Bad way expression
+  201:
+    description: Request good

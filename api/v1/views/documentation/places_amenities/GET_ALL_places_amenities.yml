@@ -1,0 +1,35 @@
+tags:
+  - Places Amenities
+parameters:
+  - name: place id
+    in: path
+    path: /api/v1/places/<place_id>/amenities
+    type: string
+    required: true
+    description: ID place
+responses:
+  404:
+    description: Not found
+  200:
+    description: GET ALL places amenities
+    schema:
+      type: array
+      properties:
+        __class__:
+          type: string
+          description: Name class
+        id:
+          type: string
+          description: ID amenities
+        name:
+          type: string
+          description: Name amenities
+        place_id:
+          type: string
+          description: ID place amenities
+        created_at:
+          type: string
+          description: Datetime amenities
+        updated_at:
+          type: string
+          description: Uptime modification amenities

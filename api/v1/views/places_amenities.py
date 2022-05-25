@@ -10,11 +10,13 @@ from models import storage
 from models.place import Place
 from models.amenity import Amenity
 from os import getenv
+from flasgger import Swagger, swag_from
 
 
 @app_views.route("/places/<string:place_id>/amenities",
                  methods=['GET'],
                  strict_slashes=False)
+@swag_from('documentation/places_amenities/GET_ALL_places_amenities.yml')
 def httpGetAllAmenitiesFromPlaceByID(place_id):
     """
     GET /places/<place_id>/amenities
@@ -39,6 +41,7 @@ def httpGetAllAmenitiesFromPlaceByID(place_id):
 @app_views.route("/places/<string:place_id>/amenities/<string:amenity_id>",
                  methods=['DELETE'],
                  strict_slashes=False)
+@swag_from('documentation/places_amenities/DELETE_places_amenities.yml')
 def httpDeleteAmenityLinkedToPlaceByID(place_id, amenity_id):
     """
     DELETE /places/<place_id>/amenities/<amenity_id>
@@ -68,6 +71,7 @@ def httpDeleteAmenityLinkedToPlaceByID(place_id, amenity_id):
 @app_views.route("/places/<string:place_id>/amenities/<string:amenity_id>",
                  methods=['POST'],
                  strict_slashes=False)
+@swag_from('documentation/places_amenities/POST_places_amenities.yml')
 def httpLinkAmenityToPlaceByID(place_id, amenity_id):
     """
     POST /places/<place_id>/amenities/<amenity_id>

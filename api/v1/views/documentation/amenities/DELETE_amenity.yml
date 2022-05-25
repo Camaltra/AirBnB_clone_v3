@@ -1,0 +1,14 @@
+tags:
+  - Amenities
+parameters:
+  - name: amenity_id
+    in: path
+    path: /api/v1/amenities/<amenity_id>
+    type: string
+    required: true
+    description: DELETE amenities ID
+responses:
+  404:
+    description: Not found
+  200:
+    description: Request DELETE

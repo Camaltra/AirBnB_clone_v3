@@ -1,0 +1,25 @@
+tags:
+  - Amenities
+parameters:
+  - name: amenity_id
+    in: path
+    path: /api/v1/amenities/<amenity_id>
+    type: string
+    required: true
+    description: ID amenities
+  - name: PUT amenities
+    in: body
+    type: string
+    required: false
+    description: delete the atributs
+    properties:
+      name:
+        type: string
+        description: PUT amenities
+responses:
+  404:
+    description: Not found
+  400:
+    description: Bad way expression
+  200:
+    description: Request good
